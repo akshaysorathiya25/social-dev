@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react'
-import { Rocket, Satellite, Globe, Users, AlertTriangle, BarChart2 } from 'lucide-react'
+import { Rocket, Satellite, Globe, Users, AlertTriangle, BarChart2, Radio } from 'lucide-react'
+import { useRouter } from 'next/navigation';
 
 const MissionStatus = ({ status }: { status: 'active' | 'completed' | 'failed' }) => {
   const colors = {
@@ -30,6 +31,7 @@ const StatCard = ({ icon: Icon, title, value, change }: { icon: React.ElementTyp
 
 export default function Dashboard() {
   const [selectedMission, setSelectedMission] = useState<number | null>(null)
+  const router = useRouter()
 
   const missions = [
     { id: 1, name: 'Mars Colonization', status: 'active' as const },
@@ -38,9 +40,26 @@ export default function Dashboard() {
     { id: 4, name: 'Jupiter Exploration', status: 'failed' as const },
   ]
 
+  const handleMissionControlClick = () => {
+    router.replace("/mission-control");
+    console.log('Navigating to Mission Control')
+    // In a real application, you would use a router to navigate
+    // For example, with Next.js:
+    // router.push('/mission-control')
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 text-white p-8">
-      <h1 className="text-4xl font-bold mb-8">Space Exploration Dashboard</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-bold">Space Exploration Dashboard</h1>
+        <button
+          onClick={handleMissionControlClick}
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full flex items-center space-x-2 transition-colors duration-300"
+        >
+          <Radio className="w-5 h-5" />
+          <span>Mission Control</span>
+        </button>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <StatCard icon={Rocket} title="Active Missions" value="3" change={5} />
