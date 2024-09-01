@@ -11,8 +11,7 @@ export default function Login() {
     // Handle login logic here
     console.log('Login attempted with:', email, password);
 
-    // comment
-    router.replace('/dashbord');
+    router.replace("/dashboard");
   };
 
   return (
